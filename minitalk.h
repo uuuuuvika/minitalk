@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <stdio.h>
+#include "colors.h"
 
 
 typedef struct s_info{
@@ -13,7 +14,7 @@ typedef struct s_info{
 	char	*message;
 } t_info;
 
-//void	ft_putchar(char c);
+
 void	ft_putchar_fd(char c, int fd);
 void	ft_putnbr_fd(int n, int fd);
 

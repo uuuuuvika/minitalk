@@ -15,10 +15,10 @@
 #include <signal.h>
 #include <stdio.h>
 
-typedef struct s_info{
-	pid_t 	server_pid;
-	pid_t 	client_pid;
-	char	*message;
+typedef struct {
+	 pid_t server_pid;
+    pid_t client_pid;
+    char* message;
 } t_info;
 
 #endif

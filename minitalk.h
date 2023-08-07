@@ -15,10 +15,24 @@
 #include <signal.h>
 #include <stdio.h>
 
+#include <string.h>
+
+#include <signal.h>
+#include <limits.h>
+#include <unistd.h>
+
+#define BITS_PER_BYTE CHAR_BIT
+#define SIGNAL_BIT_RECEIVED SIGUSR2
+#define SIGNAL_ACKNOWLEDGE SIGUSR1
+
+
 typedef struct {
-	 pid_t server_pid;
-    pid_t client_pid;
-    char* message;
-} t_info;
+	char	byte;
+	char	num_bit;
+	int		pid;
+	int		bytes_recived;
+	char	*buffer;
+}	t_client;
+
 
 #endif

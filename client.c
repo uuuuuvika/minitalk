@@ -10,40 +10,7 @@
 //     return (info);
 // }
 
-// // static void bit_mask(t_info info)
-// // {
-// // 	int bit = 8;
-// // 	int i = -1;
 
-// // 	while (info.message[++i] != '\0')
-// // 	{
-// // 		while (--bit >= 0)
-// // 		{
-// // 			if ((info.message[i] >> bit) & 1)
-// // 			{
-// // 				kill(info.server_pid, SIGUSR1);
-// // 				//printf("0");
-// // 				usleep(120);
-// // 			}
-// // 			else
-// // 			{
-// // 				kill(info.server_pid, SIGUSR2);
-// // 				//printf("1");
-// // 				usleep(120);
-// // 			}
-// // 		}
-// // 		bit = 8;
-// // 	}
-// // 	if (info.message[i] == '\0')
-// // 	{
-// // 		while (bit-- > 0)
-// // 		{
-// // 			kill(info.server_pid, SIGUSR1);
-// // 			usleep(120);
-// // 		}
-// // 	}
-// // 	//write(1, "ALL GOOD!\n", 10);
-// // }
 
 
 // static void send_bit(int server_pid, int bit)
@@ -115,15 +82,9 @@
 
 int	g_num_ack;
 
-/*
-	This function does not do anything, is just to recive the ACK signal
-	from the server that takes out the usleep() of send_byte
-*/
 
-void	clean_semaforo(int sig, siginfo_t *si, void *uap)
+void	get_ack(int sig)
 {
-	(void)uap;
-	(void)si;
 	if (sig == SIGUSR1)
 		g_num_ack++;
 }
@@ -135,33 +96,104 @@ void	clean_semaforo(int sig, siginfo_t *si, void *uap)
 		signal from the server is recived or the usleep is over
 	*/
 
-void	send_byte(char byte, int pid)
-{
-	int			i;
-	int			kill_response;
-	int			signal;
-	static int	num_bytes;
+// static void bit_mask(char *str, int server_pid)
+// {
+// 	int bit = 8;
+// 	int i = -1;
+// 	static int	num_bytes;
 
-	i = 0;
-	while (i < 8)
-	{
-		if (byte & 0x80)
-			signal = SIGUSR2;
-		else
-			signal = SIGUSR1;
-		kill_response = kill(pid, signal);
-		if (kill_response < 0)
-		{
-			write(1, "Signal error", 13);
-			exit(-1);
-		}
-		pause();
-		byte <<= 1;
-		i++;
-	}
-	num_bytes++;
-	printf("\r\e[1;34mSending [%d] bytes\e[0m", num_bytes);
+// 	while (str[++i] != '\0')
+// 	{
+// 		while (--bit >= 0)
+// 		{
+// 			if ((str[i] >> bit) & 1)
+// 			{
+// 				kill(server_pid, SIGUSR1);
+// 				//printf("0");
+// 				pause();
+// 			}
+// 			else
+// 			{
+// 				kill(server_pid, SIGUSR2);
+// 				//printf("1");
+// 				pause();
+// 			}
+// 		}
+// 		bit = 8;
+// 	}
+// 	if (str[i] == '\0')
+// 	{
+// 		while (bit-- > 0)
+// 		{
+// 			kill(server_pid, SIGUSR1);
+// 			pause();
+// 		}
+// 	}
+// 	num_bytes++;
+// 	printf("\r\e[1;34mSending [%d] bytes\e[0m", num_bytes);
+// 	//write(1, "ALL GOOD!\n", 10);
+// }
+
+static void bit_mask(char *str, int server_pid)
+{
+    int i = 0;
+    int bit = 7;
+    static int num_bytes;
+
+    while (1)
+    {
+        char current_byte = str[i];
+        char current_bit = (current_byte >> bit) & 1;
+
+        if (current_bit == 1)
+            kill(server_pid, SIGUSR2);
+        else
+            kill(server_pid, SIGUSR1);
+        pause();
+		//usleep(8000);
+        if (bit == 0)
+        {
+            bit = 7;
+            i++;
+            if (current_byte == '\0')
+                break;
+        }
+        else
+            bit--;
+    }
+
+    num_bytes++;
+    printf("\r\e[1;34mSending [%d] bytes\e[0m", num_bytes);
 }
+
+
+// void	send_byte(char byte, int pid)
+// {
+// 	int			i;
+// 	int			kill_response;
+// 	int			signal;
+// 	static int	num_bytes;
+
+// 	i = 0;
+// 	while (i < 8)
+// 	{
+// 		if (byte & 0x80)
+// 			signal = SIGUSR2;
+// 		else
+// 			signal = SIGUSR1;
+// 		kill_response = kill(pid, signal);
+// 		if (kill_response < 0)
+// 		{
+// 			write(1, "Signal error", 13);
+// 			exit(-1);
+// 		}
+// 		pause();
+// 		byte <<= 1;
+// 		i++;
+// 	}
+// 	num_bytes++;
+// 	printf("\r\e[1;34mSending [%d] bytes\e[0m", num_bytes);
+// }
 
 	/* 
 	This function calls send_byte() for each byte in the string str
@@ -169,27 +201,22 @@ void	send_byte(char byte, int pid)
 	end of the transmision in each file og get_next_line
 	*/
 
-int	send_string(char *str, int server_pid, int gnl)
-{
-	int	size;
+// int	send_string(char *str, int server_pid, int gnl)
+// {
+// 	int	size;
 
-	size = strlen (str);
-	if (!gnl)
-		g_num_ack = 0;
-	while (*str)
-		send_byte(*(str++), server_pid);
-	if (!gnl)
-	{
-		send_byte(*str, server_pid);
-		size++;
-	}
-	return (size);
-}
-
-/*
-	This function extract the lines of a fd and send to
-	send_string with gnl=1
-*/
+// 	size = strlen (str);
+// 	if (!gnl)
+// 		g_num_ack = 0;
+// 	while (*str)
+// 		send_byte(*(str++), server_pid);
+// 	if (!gnl)
+// 	{
+// 		send_byte(*str, server_pid);
+// 		size++;
+// 	}
+// 	return (size);
+// }
 
 
 int	main(int argv, char **argc)
@@ -198,18 +225,17 @@ int	main(int argv, char **argc)
 	struct sigaction	signal;
 	int					bytes_send;
 
-	if (argv == 3 || argv == 4)
+	if (argv == 3)
 	{
-		signal.sa_sigaction = clean_semaforo;
-		signal.sa_flags = SA_SIGINFO;
+		signal.sa_handler = get_ack;
+		signal.sa_flags = 0;
 		sigaction(SIGUSR1, &signal, NULL);
+
 		server_pid = atoi(argc[1]);
-		
-		bytes_send = send_string (argc[2], server_pid, 0);
-		printf("\n\n 📟 Sended %d bytes to PID [%d].\n", \
-		bytes_send, server_pid);
-		printf("\n 🔰 Recived %d bytes ACK from PID [%d].\n\n", \
-		g_num_ack / 8, server_pid);
+		//bytes_send = send_string (argc[2], server_pid, 0);
+		bit_mask(argc[2], server_pid);
+		//printf("\n\n 📟 Sended %d bytes to PID [%d].\n", bytes_send, server_pid);
+		printf("\n 🔰 Recived %d bytes ACK from PID [%d].\n\n", g_num_ack / 8, server_pid);
 	}
 	else
 		write(1, "Invalid arguments", 18);

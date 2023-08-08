@@ -20,10 +20,14 @@
 #include <signal.h>
 #include <limits.h>
 #include <unistd.h>
+#include <unistd.h>
+#include <signal.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <time.h>
+#include <string.h>
+#include <stdlib.h>
 
-#define BITS_PER_BYTE CHAR_BIT
-#define SIGNAL_BIT_RECEIVED SIGUSR2
-#define SIGNAL_ACKNOWLEDGE SIGUSR1
 
 
 typedef struct {

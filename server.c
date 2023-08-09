@@ -1,37 +1,5 @@
 #include "minitalk.h"
 
-/*
-Sigaction is a struct describing a signal handler. It contains:
-	- A signal handler function
-	- A signal mask which specifies which signals should be blocked
-	 while the signal handler function is running. If the signal
-	 handler returns normally, the original signal mask will be
-	 restored. To understand signal masks, see sigprocmask.c
-	- A set of flags.
-
-Specify the signal handler function to be called when one of
-the specified signals occur.
-
-	>> signal.sa_sigaction = signal_recived;
-
-Add all of the signals to the signal mask set. This means that
-all signals will be blocked (i.e., delayed) while our signal
-handler function is running. The original signal mask will be
-restored when our signal handler exits normally.
-
-	>> sigfillset(&signal.sa_mask);
-
-If the signal handler gets run in the middle of some function
-calls (such as open(), read(), or write()) and the signal
-handler returns normally, there are couple of options: return a
-failure code EINTR from those functions, or try to resume the
-function. With SA_RESTART, the function is resumed instead of
-returning an error.
-
-	>> signal.sa_flags = SA_RESTART;
-
-*/
-
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	unsigned int	i;

@@ -1,18 +1,18 @@
 #include "minitalk.h"
 
-int	g_num_ack;
+int ack;
 
-void	get_ack(int sig)
+void get_ack(int sig)
 {
-	if (sig == SIGUSR1)
-		g_num_ack++;
+    if (sig == SIGUSR1)
+        ack++;
 }
 
 static void bit_mask(char *str, int server_pid)
 {
     int i = 0;
     int bit = 7;
-    static int num_bytes;
+    int num_bytes;
 
     while (1)
     {
@@ -24,7 +24,6 @@ static void bit_mask(char *str, int server_pid)
         else
             kill(server_pid, SIGUSR1);
         pause();
-		//usleep(8000);
         if (bit == 0)
         {
             bit = 7;
@@ -34,32 +33,30 @@ static void bit_mask(char *str, int server_pid)
         }
         else
             bit--;
+        num_bytes++;
     }
-
-    num_bytes++;
-    printf("\r\e[1;34mSending [%d] bytes\e[0m", num_bytes);
+    printf("\rSending [%d] bytes\n", num_bytes / 8 + 1);
 }
 
-
-int	main(int argv, char **argc)
+int main(int argv, char **argc)
 {
-	int					server_pid;	
-	struct sigaction	signal;
-	int					bytes_send;
+    int server_pid;
+    struct sigaction signal;
+    int bytes_send;
 
-	if (argv == 3)
-	{
-		signal.sa_handler = get_ack;
-		signal.sa_flags = 0;
-		sigaction(SIGUSR1, &signal, NULL);
+    if (argv == 3)
+    {
+        signal.sa_handler = get_ack;
+        signal.sa_flags = 0;
+        sigaction(SIGUSR1, &signal, NULL);
 
-		server_pid = atoi(argc[1]);
-		//bytes_send = send_string (argc[2], server_pid, 0);
-		bit_mask(argc[2], server_pid);
-		//printf("\n\n 📟 Sended %d bytes to PID [%d].\n", bytes_send, server_pid);
-		printf("\n 💥 ---> Got %d ACK from PID [%d].\n\n", g_num_ack / 8, server_pid);
-	}
-	else
-		write(1, "Invalid arguments", 18);
-	return (0);
+        server_pid = atoi(argc[1]);
+        printf("\n🦢 Running client PID [%d]\n", getpid());
+        bit_mask(argc[2], server_pid);
+        // printf("\n\n 📟 Sended %d bytes to PID [%d].\n", bytes_send, server_pid);
+        printf("\n🔹 Recived [%d] ACK from PID [%d]\n\n", ack / 8, server_pid);
+    }
+    else
+        write(1, "Invalid arguments", 18);
+    return (0);
 }

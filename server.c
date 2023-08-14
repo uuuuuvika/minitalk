@@ -39,7 +39,7 @@ unsigned int	ft_strlcat(char *dest, const char *src, size_t size)
 	return ((dest_size + src_size));
 }
 
-char *strjoin(char const *s1, char const *s2) //-lbsd
+char *ft_strjoin(char const *s1, char const *s2) //-lbsd
 {
 	char *ptr;
 	int lens1;

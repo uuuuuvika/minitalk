@@ -12,7 +12,6 @@ static void bit_mask(char *str, int server_pid)
 {
     int i = 0;
     int bit = 7;
-    int num_bytes;
 
     while (1)
     {
@@ -33,10 +32,30 @@ static void bit_mask(char *str, int server_pid)
         }
         else
             bit--;
-        num_bytes++;
     }
-    printf("\rSending [%d] bytes\n", num_bytes / 8 + 1);
 }
+
+// static void bit_mask(char *str, int server_pid) {
+//     int i = 0; 
+//     int bit = 7;
+//     int num_bytes = 0;
+
+//     while (1) {
+//         char current_byte = str[i];
+//         char current_bit = (current_byte >> bit) & 1;
+
+//         kill(server_pid, ((current_byte >> bit) & 1) ? SIGUSR2 : SIGUSR1);
+//         pause();
+
+//         if (!bit--) {
+//             bit = 7;
+//             if (current_byte == '\0') break;
+//             i++;
+//         }
+//         num_bytes++;
+//     }
+//     printf(YEL "\n\rSending [%d] bytes\n" RESET, (num_bytes + 7) / 8);
+// }
 
 int main(int argv, char **argc)
 {
@@ -49,11 +68,9 @@ int main(int argv, char **argc)
         signal.sa_handler = get_ack;
         signal.sa_flags = 0;
         sigaction(SIGUSR1, &signal, NULL);
-
         server_pid = atoi(argc[1]);
         printf("\n🦢 Running client PID [%d]\n", getpid());
         bit_mask(argc[2], server_pid);
-        // printf("\n\n 📟 Sended %d bytes to PID [%d].\n", bytes_send, server_pid);
         printf("\n🔹 Recived [%d] ACK from PID [%d]\n\n", ack / 8, server_pid);
     }
     else

@@ -61,7 +61,7 @@ int main(int argv, char **argc)
 {
     int server_pid;
     struct sigaction signal;
-    int bytes_send;
+    //int bytes_send;
 
     if (argv == 3)
     {

@@ -1,7 +1,8 @@
 NAME=minitalk
-
+SERVER=server
+CLIENT=client
 LIBFT=lib/libft.a
-FT_PRINTF=ft_p/ft_printf.c
+FT_PRINTF=ft_p/libftprintf.a
 
 CC=cc
 CFLAGS=-Wall -Wextra -Werror
@@ -14,16 +15,17 @@ OBJ_SERVER=$(SRC_SERVER:.c=.o)
 OBJ_CLIENT=$(SRC_CLIENT:.c=.o)
 
 all: $(SERVER) $(CLIENT)
-$(NAME): all
+# $(NAME): all
 
-$(FT_PRINTF): $(MAKE) -C ./ft_p
-$(LIBFT): $(MAKE) -C ./lib
+$(LIBFT):
+	$(MAKE) -C ./lib
+$(FT_PRINTF):
+	$(MAKE) -C ./ft_p
 
 $(SERVER): $(OBJ_SERVER) $(FT_PRINTF) $(LIBFT)
-						$(CC) $(CFLAGS) $(OBJ_SERVER) $(FT_PRINTF) $(LIBFT) -o $(SERVER)
+						$(CC) $(CFLAGS) $(OBJ_SERVER) $(LIBFT) $(FT_PRINTF) -o server
 $(CLIENT): $(OBJ_CLIENT) $(FT_PRINTF) $(LIBFT)
-						$(CC) $(CFLAGS) $(OBJ_CLIENT) $(FT_PRINTF) $(LIBFT) -o $(CLIENT)
-
+						$(CC) $(CFLAGS) $(OBJ_CLIENT)  $(LIBFT) $(FT_PRINTF) -o client
 clean:
 		$(MAKE) clean -C ./ft_p
 		$(MAKE) clean -C ./lib

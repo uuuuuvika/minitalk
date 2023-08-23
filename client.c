@@ -48,6 +48,7 @@ int main(int argv, char **argc)
         server_pid = atoi(argc[1]);
         printf("\n🦢 Running client PID [%d]\n", getpid());
         bit_mask(argc[2], server_pid);
+
         printf("\n🔹 Recived [%d] ACK from PID [%d]\n\n", ack / 8, server_pid);
     }
     else

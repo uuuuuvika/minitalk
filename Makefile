@@ -1,7 +1,7 @@
 NAME=minitalk
 
-LIBFT=libft/libft.a
-FT_PRINTF=ft_printf/ft_printf.c
+LIBFT=lib/libft.a
+FT_PRINTF=ft_p/ft_printf.c
 
 CC=cc
 CFLAGS=-Wall -Wextra -Werror
@@ -16,8 +16,8 @@ OBJ_CLIENT=$(SRC_CLIENT:.c=.o)
 all: $(SERVER) $(CLIENT)
 $(NAME): all
 
-$(FT_PRINTF): $(MAKE) -C ./ft_printf
-$(LIBFT): $(MAKE) -C ./libft
+$(FT_PRINTF): $(MAKE) -C ./ft_p
+$(LIBFT): $(MAKE) -C ./lib
 
 $(SERVER): $(OBJ_SERVER) $(FT_PRINTF) $(LIBFT)
 						$(CC) $(CFLAGS) $(OBJ_SERVER) $(FT_PRINTF) $(LIBFT) -o $(SERVER)
@@ -25,13 +25,13 @@ $(CLIENT): $(OBJ_CLIENT) $(FT_PRINTF) $(LIBFT)
 						$(CC) $(CFLAGS) $(OBJ_CLIENT) $(FT_PRINTF) $(LIBFT) -o $(CLIENT)
 
 clean:
-		$(MAKE) clean -C ./ft_printf
-		$(MAKE) clean -C ./libft
+		$(MAKE) clean -C ./ft_p
+		$(MAKE) clean -C ./lib
 		$(RM) $(OBJ_SERVER) $(OBJ_CLIENT)
 
 fclean: clean
-		$(MAKE) fclean -C ./ft_printf
-		$(MAKE) fclean -C ./libft
+		$(MAKE) fclean -C ./ft_p
+		$(MAKE) fclean -C ./lib
 		$(RM) $(SERVER) $(CLIENT)
 
 re: fclean all

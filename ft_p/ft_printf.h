@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vshcherb <vshcherb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vika <vika@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:44:44 by vshcherb          #+#    #+#             */
-/*   Updated: 2023/06/13 14:53:32 by vshcherb         ###   ########.fr       */
+/*   Updated: 2023/08/23 12:41:34 by vika             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 
-int	ft_strlen(const char *str);
+int	ft_strlenn(const char *str);
 int	ft_putchar(char c);
 int	ft_putstr(char *str);
 int	ft_putnbr(int n);

@@ -10,24 +10,17 @@
 # define WHT "\e[0;37m"
 # define RESET "\033[0m"
 
-#include <unistd.h>
+
 #include <stdlib.h>
 #include <signal.h>
 #include <stdio.h>
-
 #include <string.h>
-
-#include <signal.h>
 #include <limits.h>
 #include <unistd.h>
-#include <unistd.h>
-#include <signal.h>
-#include <stdio.h>
 #include <fcntl.h>
-#include <time.h>
 #include <string.h>
-#include <stdlib.h>
-
+#include "lib/libft.h"
+#include "ft_p/ft_printf.h"
 
 
 typedef struct {

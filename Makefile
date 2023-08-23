@@ -1,6 +1,8 @@
 NAME=minitalk
+
 SERVER=server
 CLIENT=client
+
 LIBFT=lib/libft.a
 FT_PRINTF=ft_p/libftprintf.a
 

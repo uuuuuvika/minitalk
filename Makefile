@@ -7,9 +7,6 @@ CC=cc
 CFLAGS=-Wall -Wextra -Werror
 RM=rm -rf
 
-SERVER = server
-CLIENT = client
-
 SRC_SERVER=server.c
 SRC_CLIENT=client.c
 

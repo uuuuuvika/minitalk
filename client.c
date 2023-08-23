@@ -35,33 +35,10 @@ static void bit_mask(char *str, int server_pid)
     }
 }
 
-// static void bit_mask(char *str, int server_pid) {
-//     int i = 0; 
-//     int bit = 7;
-//     int num_bytes = 0;
-
-//     while (1) {
-//         char current_byte = str[i];
-//         char current_bit = (current_byte >> bit) & 1;
-
-//         kill(server_pid, ((current_byte >> bit) & 1) ? SIGUSR2 : SIGUSR1);
-//         pause();
-
-//         if (!bit--) {
-//             bit = 7;
-//             if (current_byte == '\0') break;
-//             i++;
-//         }
-//         num_bytes++;
-//     }
-//     printf(YEL "\n\rSending [%d] bytes\n" RESET, (num_bytes + 7) / 8);
-// }
-
 int main(int argv, char **argc)
 {
     int server_pid;
     struct sigaction signal;
-    //int bytes_send;
 
     if (argv == 3)
     {

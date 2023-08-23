@@ -14,13 +14,10 @@ OBJ_SERVER=$(SRC_SERVER:.c=.o)
 OBJ_CLIENT=$(SRC_CLIENT:.c=.o)
 
 all: $(SERVER) $(CLIENT)
-
 $(NAME): all
 
-$(FT_PRINTF):
-				$(MAKE) -C ./ft_printf
-$(LIBFT):
-				$(MAKE) -C ./libft
+$(FT_PRINTF): $(MAKE) -C ./ft_printf
+$(LIBFT): $(MAKE) -C ./libft
 
 $(SERVER): $(OBJ_SERVER) $(FT_PRINTF) $(LIBFT)
 						$(CC) $(CFLAGS) $(OBJ_SERVER) $(FT_PRINTF) $(LIBFT) -o $(SERVER)

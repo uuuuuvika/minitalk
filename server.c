@@ -1,59 +1,59 @@
 #include "minitalk.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
-{
-	unsigned int	i;
+// size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+// {
+// 	unsigned int	i;
 
-	i = 0;
-	if (size == 0)
-		return (strlen(src));
-	while (src[i] != '\0' && i < size - 1)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (size > 0)
-		dest[i] = '\0';
-	return (strlen(src));
-}
+// 	i = 0;
+// 	if (size == 0)
+// 		return (strlen(src));
+// 	while (src[i] != '\0' && i < size - 1)
+// 	{
+// 		dest[i] = src[i];
+// 		i++;
+// 	}
+// 	if (size > 0)
+// 		dest[i] = '\0';
+// 	return (strlen(src));
+// }
 
-unsigned int	ft_strlcat(char *dest, const char *src, size_t size)
-{
-	size_t			dest_size;
-	size_t			src_size;
-	unsigned int	i;
+// unsigned int	ft_strlcat(char *dest, const char *src, size_t size)
+// {
+// 	size_t			dest_size;
+// 	size_t			src_size;
+// 	unsigned int	i;
 
-	dest_size = strlen(dest);
-	src_size = strlen(src);
-	i = 0;
-	if (size == 0 && dest_size == 0)
-		return (src_size);
-	if (dest_size >= size)
-		return (size + src_size);
-	while (src[i] != '\0' && (i + dest_size) < size - 1)
-	{
-		dest[dest_size + i] = src[i];
-		i++;
-	}
-	dest[dest_size + i] = '\0';
-	return ((dest_size + src_size));
-}
+// 	dest_size = strlen(dest);
+// 	src_size = strlen(src);
+// 	i = 0;
+// 	if (size == 0 && dest_size == 0)
+// 		return (src_size);
+// 	if (dest_size >= size)
+// 		return (size + src_size);
+// 	while (src[i] != '\0' && (i + dest_size) < size - 1)
+// 	{
+// 		dest[dest_size + i] = src[i];
+// 		i++;
+// 	}
+// 	dest[dest_size + i] = '\0';
+// 	return ((dest_size + src_size));
+// }
 
-char *ft_strjoin(char const *s1, char const *s2) //-lbsd
-{
-	char *ptr;
-	int lens1;
-	int lens2;
+// char *ft_strjoin(char const *s1, char const *s2) //-lbsd
+// {
+// 	char *ptr;
+// 	int lens1;
+// 	int lens2;
 
-	lens1 = strlen(s1);
-	lens2 = strlen(s2);
-	ptr = malloc(sizeof(char) * (lens1 + lens2 + 1));
-	if (!ptr)
-		return (NULL);
-	ft_strlcpy(ptr, s1, lens1 + 1);
-	ft_strlcat(ptr, s2, lens1 + lens2 + 1);
-	return (ptr);
-}
+// 	lens1 = strlen(s1);
+// 	lens2 = strlen(s2);
+// 	ptr = malloc(sizeof(char) * (lens1 + lens2 + 1));
+// 	if (!ptr)
+// 		return (NULL);
+// 	ft_strlcpy(ptr, s1, lens1 + 1);
+// 	ft_strlcat(ptr, s2, lens1 + lens2 + 1);
+// 	return (ptr);
+// }
 
 void cleanup_client(t_client *client)
 {
